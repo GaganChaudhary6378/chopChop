@@ -41,12 +41,12 @@ Outcome: user can create and replay a clean segment sequence locally.
 
 Outcome: same video opens with same selected segments on another browser with extension installed.
 
-## Phase 4 — Guided editing
+## Phase 4 — Agent-guided editing
 
-- [ ] Parse explicit time-range commands into proposed segments.
-- [ ] Display proposal and require Apply before any change.
-- [ ] Explain parsing failures and supported command examples.
-- [ ] Add tests for timestamps, range syntax, invalid input, and confirmation.
+- [x] Parse explicit time-range commands into proposed segments.
+- [x] Display proposal and require Apply before any change.
+- [x] Explain parsing failures and supported command examples.
+- [x] Add tests for timestamps, range syntax, and invalid input.
 
 Outcome: user can make edits with clear time instructions, without an LLM dependency.
 

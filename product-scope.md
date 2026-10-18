@@ -6,7 +6,7 @@ People share long YouTube videos but only mean a few moments. Current sharing fo
 
 ## Product promise
 
-Pick one or more video segments. Share one link. Recipient watches only those segments, in the selected order.
+Tell ChopHop what matters. It proposes a watch path, the user approves it, and one link shares that exact sequence.
 
 ## Primary user
 

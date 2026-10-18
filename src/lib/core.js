@@ -52,3 +52,26 @@ export function decodeWatchPath(hash) {
     return { path: null, error: "This shared watch path is invalid." };
   }
 }
+
+export function parseTimeExpression(value) {
+  const text = value.trim().toLowerCase();
+  if (/^\d{1,2}:\d{2}(?::\d{2})?$/.test(text)) {
+    return text.split(":").map(Number).reduce((total, part) => total * 60 + part, 0);
+  }
+  let seconds = 0;
+  for (const match of text.matchAll(/(\d+)\s*(hours?|hrs?|h|minutes?|mins?|m|seconds?|secs?|s)/g)) {
+    const amount = Number(match[1]);
+    const unit = match[2];
+    seconds += amount * (/^h/.test(unit) ? 3600 : /^m/.test(unit) ? 60 : 1);
+  }
+  return seconds || Number.NaN;
+}
+
+export function parseWatchPathCommand(command, duration) {
+  const time = "(?:(?:\\d{1,2}:){1,2}\\d{2}|(?:\\d+\\s*(?:hours?|hrs?|h|minutes?|mins?|m|seconds?|secs?|s)\\s*){1,3})";
+  const range = new RegExp(`(${time})\\s*(?:to|until|through|[-–])\\s*(${time})`, "gi");
+  const segments = [];
+  for (const match of command.matchAll(range)) segments.push([parseTimeExpression(match[1]), parseTimeExpression(match[2])]);
+  if (!segments.length) return { segments: null, error: "Use clear ranges, for example: keep 0:30 to 2:10, then 7:45 to 9:00." };
+  return { segments, error: validateSegments(segments, duration) };
+}

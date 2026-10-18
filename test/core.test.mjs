@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { decodeWatchPath, encodeWatchPath, formatTime, isValidSegment, validateSegments } from "../src/lib/core.js";
+import { decodeWatchPath, encodeWatchPath, formatTime, isValidSegment, parseWatchPathCommand, parseTimeExpression, validateSegments } from "../src/lib/core.js";
 
 test("formats timestamps", () => {
   assert.equal(formatTime(65.8), "1:05");
@@ -18,4 +18,10 @@ test("round-trips a versioned share payload and rejects malformed input", () => 
   const encoded = encodeWatchPath("dQw4w9WgXcQ", [[30, 130]]);
   assert.deepEqual(decodeWatchPath(`#chophop=${encoded}`).path, { v: 1, videoId: "dQw4w9WgXcQ", segments: [[30, 130]] });
   assert.equal(decodeWatchPath("#chophop=not-base64").error, "This shared watch path is invalid.");
+});
+
+test("parses explicit agent ranges but rejects vague requests", () => {
+  assert.equal(parseTimeExpression("7m 45s"), 465);
+  assert.deepEqual(parseWatchPathCommand("Keep 0:30 to 2:10, then 7m 45s to 9m.", 600).segments, [[30, 130], [465, 540]]);
+  assert.match(parseWatchPathCommand("remove boring parts", 600).error, /Use clear ranges/);
 });
