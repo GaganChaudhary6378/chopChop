@@ -6,7 +6,7 @@
 - [x] Define client-only architecture and share payload.
 - [x] Create a player adapter spike against the standard YouTube HTML5 video element.
 - [ ] Confirm player integration works on current Chrome and live YouTube UI.
-- [ ] Decide extension name and icon direction.
+- [x] Decide extension name: ChopHop.
 
 Outcome: one tested browser integration path before UI work.
 
@@ -27,7 +27,8 @@ Outcome: extension can show current playback time and seek reliably.
 - [x] Skip gaps, play ordered segments, and pause at completion.
 - [x] Save draft settings by video ID in Chrome storage.
 - [x] Add unit tests for range validation.
-- [ ] Add reorder controls and browser tests for a live YouTube page.
+- [x] Add reorder controls.
+- [ ] Add browser tests for a live YouTube page.
 
 Outcome: user can create and replay a clean segment sequence locally.
 
@@ -52,10 +53,12 @@ Outcome: user can make edits with clear time instructions, without an LLM depend
 
 ## Phase 5 — Polish and release readiness
 
-- [ ] Make overlay keyboard-accessible and usable in fullscreen.
+- [x] Make overlay keyboard-accessible.
+- [ ] Verify fullscreen behavior on a live YouTube page.
 - [ ] Test ads, captions, reloads, slow loading, and page navigation.
-- [ ] Add privacy copy, store listing assets, README setup steps, and screenshots.
-- [ ] Package extension and run final Chrome acceptance tests.
+- [x] Add privacy copy, store listing draft, and README setup steps.
+- [x] Package a loadable extension in `dist/`.
+- [ ] Run final Chrome acceptance tests and capture screenshots.
 
 Outcome: installable Chrome extension ready for private testers.
 

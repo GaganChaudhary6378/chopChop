@@ -6,7 +6,7 @@ Example: a 20-minute tutorial can share `00:30–02:10`, `07:45–09:00`, and `1
 
 This is playback editing only. It does not download, alter, or re-upload YouTube video files.
 
-See [product-scope.md](product-scope.md), [architecture.md](architecture.md), and [to-do.md](to-do.md).
+See [product-scope.md](product-scope.md), [architecture.md](architecture.md), [PRIVACY.md](PRIVACY.md), and [to-do.md](to-do.md).
 
 ## MVP stack
 
@@ -16,7 +16,7 @@ See [product-scope.md](product-scope.md), [architecture.md](architecture.md), an
 - Browser storage for saved local drafts
 - URL fragment payload for anonymous shared clips
 
-No backend is required for MVP.
+No backend, accounts, analytics, or external AI service is required for MVP.
 
 ## Local setup
 
@@ -38,4 +38,4 @@ npm run dev        # rebuild on source changes
 
 ## Development status
 
-Phase 1 implementation is ready for live Chrome testing.
+All MVP code phases are complete. Live Chrome acceptance testing remains.

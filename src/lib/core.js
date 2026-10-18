@@ -68,6 +68,7 @@ export function parseTimeExpression(value) {
 }
 
 export function parseWatchPathCommand(command, duration) {
+  // shortcut: explicit time syntax only, add transcript or LLM support when users need semantic edits.
   const time = "(?:(?:\\d{1,2}:){1,2}\\d{2}|(?:\\d+\\s*(?:hours?|hrs?|h|minutes?|mins?|m|seconds?|secs?|s)\\s*){1,3})";
   const range = new RegExp(`(${time})\\s*(?:to|until|through|[-–])\\s*(${time})`, "gi");
   const segments = [];
