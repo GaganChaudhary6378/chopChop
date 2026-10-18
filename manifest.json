@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Clip Share",
+  "version": "0.1.0",
+  "description": "Select and share useful playback segments from a YouTube video.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

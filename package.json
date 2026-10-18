@@ -1,0 +1,12 @@
+{
+  "name": "youtube-clip-share-extension",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Share selected playback segments from a YouTube video.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node --watch scripts/build.mjs",
+    "test": "node --test test/*.test.mjs"
+  }
+}

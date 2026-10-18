@@ -1,0 +1,16 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+
+# Local settings and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Editor and operating-system files
+.DS_Store
+.idea/
+.vscode/
