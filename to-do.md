@@ -33,9 +33,10 @@ Outcome: user can create and replay a clean segment sequence locally.
 
 ## Phase 3 — Portable sharing
 
-- [ ] Add versioned URL-fragment encoder and decoder.
-- [ ] Copy share link and load settings from a received link.
-- [ ] Reject malformed or wrong-video payloads with clear UI messages.
+- [x] Add versioned URL-fragment encoder and decoder.
+- [x] Copy share link and load settings from a received link.
+- [x] Reject malformed or wrong-video payloads with clear UI messages.
+- [x] Add unit tests for share payloads.
 - [ ] Test sender-to-recipient flow in separate browser profiles.
 
 Outcome: same video opens with same selected segments on another browser with extension installed.

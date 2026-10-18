@@ -27,3 +27,28 @@ export function validateSegments(segments, duration) {
 export function videoIdFromLocation(locationValue = location) {
   return new URLSearchParams(locationValue.search).get("v") ?? "";
 }
+
+function base64UrlEncode(value) {
+  return btoa(unescape(encodeURIComponent(value))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function base64UrlDecode(value) {
+  const padded = value.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(value.length / 4) * 4, "=");
+  return decodeURIComponent(escape(atob(padded)));
+}
+
+export function encodeWatchPath(videoId, segments) {
+  return base64UrlEncode(JSON.stringify({ v: 1, videoId, segments }));
+}
+
+export function decodeWatchPath(hash) {
+  const encoded = new URLSearchParams(hash.replace(/^#/, "")).get("chophop");
+  if (!encoded) return { path: null, error: null };
+  try {
+    const decoded = JSON.parse(base64UrlDecode(encoded));
+    if (decoded.v !== 1 || !/^[A-Za-z0-9_-]{11}$/.test(decoded.videoId) || !Array.isArray(decoded.segments)) throw new Error();
+    return { path: decoded, error: null };
+  } catch {
+    return { path: null, error: "This shared watch path is invalid." };
+  }
+}

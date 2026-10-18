@@ -1,6 +1,6 @@
-# YouTube Clip Share Extension
+# ChopHop
 
-Chrome extension concept: select useful parts of a YouTube video while it plays, then share one link. The recipient opens YouTube with the same selected parts playing in order.
+Tell an agent what matters in a YouTube video. ChopHop creates a reviewable watch path and one shareable link.
 
 Example: a 20-minute tutorial can share `00:30–02:10`, `07:45–09:00`, and `15:20–16:05`. The recipient never needs “skip to…” instructions.
 

@@ -1,4 +1,4 @@
-import { formatTime, validateSegments, videoIdFromLocation } from "./lib/core.js";
+import { decodeWatchPath, encodeWatchPath, formatTime, validateSegments, videoIdFromLocation } from "./lib/core.js";
 import { SegmentPlaybackController, YouTubePlayerAdapter } from "./lib/player.js";
 
 const storageKey = (videoId) => `chophop:${videoId}`;
@@ -8,7 +8,7 @@ async function loadDraft(videoId) {
   return stored[storageKey(videoId)] ?? [];
 }
 
-function mountOverlay(player, videoId, savedSegments) {
+function mountOverlay(player, videoId, savedSegments, initialMessage = "") {
   if (document.getElementById("chophop-root")) return;
   let segments = savedSegments;
   let start = null;
@@ -26,7 +26,7 @@ function mountOverlay(player, videoId, savedSegments) {
     <section class="panel" aria-label="ChopHop video watch path">
       <h1>ChopHop</h1><p class="sub">Build a watch path.</p><p class="status" aria-live="polite">Loading video…</p>
       <div><button data-action="start">Start segment</button><button class="secondary" data-action="end">End segment</button></div>
-      <ol data-segments></ol><div><button data-action="play">Play path</button><button class="secondary" data-action="stop">Stop</button></div>
+      <ol data-segments></ol><div><button data-action="play">Play path</button><button class="secondary" data-action="stop">Stop</button><button class="secondary" data-action="share">Copy link</button></div>
     </section>`;
   const status = shadow.querySelector(".status");
   const list = shadow.querySelector("[data-segments]");
@@ -49,11 +49,26 @@ function mountOverlay(player, videoId, savedSegments) {
   });
   shadow.querySelector("[data-action=play]").addEventListener("click", () => { const error = validateSegments(segments, player.duration); if (error) return render(error); controller.setSegments(segments); controller.start(); });
   shadow.querySelector("[data-action=stop]").addEventListener("click", () => controller.stop());
+  shadow.querySelector("[data-action=share]").addEventListener("click", () => {
+    const error = validateSegments(segments, player.duration);
+    if (error) return render(error);
+    const link = new URL(location.href); link.hash = new URLSearchParams({ chophop: encodeWatchPath(videoId, segments) }).toString();
+    navigator.clipboard.writeText(link.href).then(() => render("Watch path link copied.")).catch(() => render("Could not copy link."));
+  });
   window.setInterval(() => { if (!controller.active) render(); }, 500);
-  document.body.append(host); render();
+  document.body.append(host); render(initialMessage);
 }
 
 if (location.pathname === "/watch") {
   const player = new YouTubePlayerAdapter(); const videoId = videoIdFromLocation();
-  player.connect().then(() => loadDraft(videoId)).then((segments) => mountOverlay(player, videoId, segments)).catch((error) => console.warn("ChopHop:", error));
+  player.connect().then(async () => {
+    const shared = decodeWatchPath(location.hash);
+    if (shared.error) return mountOverlay(player, videoId, await loadDraft(videoId), shared.error);
+    if (shared.path && shared.path.videoId !== videoId) return mountOverlay(player, videoId, await loadDraft(videoId), "This watch path is for another video.");
+    if (shared.path) {
+      const error = validateSegments(shared.path.segments, player.duration);
+      return mountOverlay(player, videoId, shared.path.segments, error ?? "Shared watch path loaded.");
+    }
+    return mountOverlay(player, videoId, await loadDraft(videoId));
+  }).catch((error) => console.warn("ChopHop:", error));
 }
