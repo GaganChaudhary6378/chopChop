@@ -22,11 +22,12 @@ Outcome: extension can show current playback time and seek reliably.
 
 ## Phase 2 — Segment editor and playback controller
 
-- [ ] Add start/end actions, segment list, edit/delete, and reorder.
-- [ ] Validate ranges and cap shareable segments at 20.
-- [ ] Skip gaps, play ordered segments, and pause at completion.
-- [ ] Save draft settings by video ID in Chrome storage.
-- [ ] Add browser tests for create, edit, transition, and manual seek.
+- [x] Add start/end actions, segment list, and delete.
+- [x] Validate ranges and cap shareable segments at 20.
+- [x] Skip gaps, play ordered segments, and pause at completion.
+- [x] Save draft settings by video ID in Chrome storage.
+- [x] Add unit tests for range validation.
+- [ ] Add reorder controls and browser tests for a live YouTube page.
 
 Outcome: user can create and replay a clean segment sequence locally.
 

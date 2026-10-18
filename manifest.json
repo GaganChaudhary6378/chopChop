@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Clip Share",
+  "name": "ChopHop",
   "version": "0.1.0",
-  "description": "Select and share useful playback segments from a YouTube video.",
+  "description": "Tell an agent what matters. Share only those video moments.",
   "permissions": ["storage"],
   "content_scripts": [
     {
