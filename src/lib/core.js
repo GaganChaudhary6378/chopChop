@@ -10,6 +10,11 @@ export function formatTime(seconds) {
     : `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
 
+export function timeFromTimelinePosition(offset, width, duration) {
+  if (!Number.isFinite(offset) || !Number.isFinite(width) || width <= 0 || !Number.isFinite(duration) || duration <= 0) return 0;
+  return Math.max(0, Math.min(1, offset / width)) * duration;
+}
+
 export function isValidSegment(segment, duration) {
   const [start, end] = segment;
   return Number.isFinite(start) && Number.isFinite(end) && start >= 0 && start < end && end <= duration;

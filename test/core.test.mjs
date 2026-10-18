@@ -1,10 +1,16 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { decodeWatchPath, encodeWatchPath, formatTime, isValidSegment, parseWatchPathCommand, parseTimeExpression, validateSegments } from "../src/lib/core.js";
+import { decodeWatchPath, encodeWatchPath, formatTime, isValidSegment, parseWatchPathCommand, parseTimeExpression, timeFromTimelinePosition, validateSegments } from "../src/lib/core.js";
 
 test("formats timestamps", () => {
   assert.equal(formatTime(65.8), "1:05");
   assert.equal(formatTime(3661), "1:01:01");
+});
+
+test("maps a timeline drag position to a video timestamp", () => {
+  assert.equal(timeFromTimelinePosition(50, 200, 600), 150);
+  assert.equal(timeFromTimelinePosition(-1, 200, 600), 0);
+  assert.equal(timeFromTimelinePosition(250, 200, 600), 600);
 });
 
 test("validates segment bounds and overlaps", () => {
